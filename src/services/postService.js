@@ -1,5 +1,5 @@
 import { createPost } from '../controllers/postController.js';
-import { countAllPosts, findAllPosts } from '../repositories/postRepository.js';
+import { countAllPosts, findAllPosts, updatePostById, } from '../repositories/postRepository.js';
 
 export const createPostService = async (createPostObject) => {
     const caption = createPostObject.caption?.trim();
@@ -21,4 +21,16 @@ export const getAllPostsService = async (offset, limit) => {
     return {
         posts, totalPages, totalDocuments
     }
+}
+
+export const deletePostService = async (id) => {
+    //call the repository function
+    const response = await deletePostById(id);
+    return response;
+}
+
+export const updatePostService = async (id, updateObject) => {
+    //call the repository function
+    const response = await updatePostById(id, updateObject);
+    return response;
 }

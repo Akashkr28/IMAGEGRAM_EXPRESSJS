@@ -3,12 +3,16 @@
 import express from 'express'
 
 import { s3uploader } from '../../config/multerconfig.js'
-import { createPost, getAllPosts } from '../../controllers/postController.js';
+import { createPost, getAllPosts, deletePost, updatePost } from '../../controllers/postController.js';
 
 const router = express.Router(); // Router object to modularize the routes
 
 router.post('/', s3uploader.single('image'), createPost);
 
 router.get('/', getAllPosts)
+
+router.delete('/:id', deletePost);
+
+router.post('/:id', s3uploader.single('image'), updatePost)
 
 export default router;
