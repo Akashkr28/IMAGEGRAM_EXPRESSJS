@@ -2,6 +2,12 @@ import { createPostService, getAllPostsService, deletePostService, updatePostSer
 
 export async function createPost(req, res) {
     //call the service layer function
+    if(!req.file || !req.file.location) {
+        return res.status(400).json({
+                success: false,
+                message: "Image is required"
+        });
+    }
 
     const post = createPostService({
         caption: req.body.caption,
