@@ -1,4 +1,4 @@
-import user from "../schema/user";
+import User from "../schema/user.js";
 
 export const findUserByEmail = async (email) => {
     try {
@@ -15,5 +15,17 @@ export const findAllUsers = async () => {
         return users;
     } catch (error) {
         console.log(error);
+    }
+}
+
+// First Create User Repository - SignUp form
+
+export const createUser = async(user) => {
+    try{
+        const newUser = await User.create(user);
+        return newUser;
+    } catch (error) {
+        console.log(error);
+        throw error;
     }
 }
