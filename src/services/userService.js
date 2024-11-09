@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { createUser } from "../repositories/userRepository.js";
 
 export const signupUserService = async (user) => {
@@ -6,7 +7,8 @@ export const signupUserService = async (user) => {
 
         return newUser;
     } catch (error) {
-        console.log("service error", error)
+        console.log("service error", error.message)
+        if(error instanceof mongoose.Error.validatorError)
         throw error;
     }
 }
