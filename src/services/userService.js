@@ -7,8 +7,12 @@ export const signupUserService = async (user) => {
 
         return newUser;
     } catch (error) {
-        console.log("service error", error.message)
-        if(error instanceof mongoose.Error.validatorError)
+        if(error.name === "MongoServerError" && error.code === 11000) {
+            throw {
+                status: 400,
+                message: "Email already exists",
+            }
+        }
         throw error;
     }
 }

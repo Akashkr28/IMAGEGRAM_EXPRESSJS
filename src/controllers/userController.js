@@ -18,6 +18,12 @@ export async function signup(req, res) {
         });
     } catch (error) {
         console.log(error);
+        if(error.status) {
+            return res.status(error.status).json({
+                success: false,
+                message: error.message
+            });
+        }
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
