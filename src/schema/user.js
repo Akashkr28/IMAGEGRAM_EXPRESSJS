@@ -27,24 +27,19 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-userSchema.pre('save', async function modifyPassword(next) {
+userSchema.pre('save', function modifyPassword(next) {
     // incoming user object
     const user = this; //object with plain password
 
-    // Only hash the password if it has been modified (or is new)
-    if (user.isModified('password')) {
-        try {
-            const SALT = await bcrypt.genSalt(9);           // Generate salt asynchronously
-            const hashedPassword = await bcrypt.hash(user.password, SALT); // Hash password asynchronously
-            user.password = hashedPassword;
-        } catch (error) {
-            return next(error); // Pass the error to the next middleware if hashing fails
-        }
-    }
+    const SALT = bcrypt.genSaltSync(9);
+    // hash password
+    const hashedPassword = bcrypt.hashSync(user.password, SALT);
+    // replace plain password with hashed password
+    user.password = hashedPassword;
 
     next();
 });
 
-const user = mongoose.model("user", userSchema); //user collection
+const user = mongoose.model("User", userSchema); //user collection
 
 export default user;
