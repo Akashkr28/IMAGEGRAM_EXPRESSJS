@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
-    title: {
+    caption: {
         type: String,
         required: true,
         minLength: 5
