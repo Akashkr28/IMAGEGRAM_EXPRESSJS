@@ -1,4 +1,4 @@
-import { createPost, deletePostById, countAllPosts, findAllPosts, updatePostById, } from '../repositories/postRepository.js';
+import { createPost, deletePostById, countAllPosts, findAllPosts, updatePostById, findPostById } from '../repositories/postRepository.js';
 
 export const createPostService = async (createPostObject) => {
     const caption = createPostObject.caption?.trim();
@@ -22,8 +22,15 @@ export const getAllPostsService = async (offset, limit) => {
     }
 }
 
-export const deletePostService = async (id) => {
+export const deletePostService = async (id, user) => {
     //call the repository function
+    const post = await findPostById(id);
+    if(post.user !== user) {
+        throw {
+            status: 401,
+            message: "Unauthorized"
+        }
+    }
     const response = await deletePostById(id);
     return response;
 }
