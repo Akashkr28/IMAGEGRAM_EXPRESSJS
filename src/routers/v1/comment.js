@@ -1,12 +1,11 @@
-// Write an API to create comments on a post or another Comment
-
 import express from 'express';
-import { createComment } from '../../controllers/commentController.js';
-import { zodCommentSchema } from '../../validators/zodCommentSchema.js';
-import { validate } from '../../validators/zodValidator.js';
+import { getCommentById, createComment } from '../../controllers/commentController.js';
+import { isAuthenticated } from '../../middlewares/authMiddleware.js';
 
-const router = express.Router();    
+const router = express.Router();
 
-router.post('/create', validate(zodCommentSchema), createComment);
+router.get('/:id', isAuthenticated, getCommentById);
 
-export default router
+router.post('/', isAuthenticated, createComment);
+
+export default router;
