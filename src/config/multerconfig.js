@@ -3,6 +3,8 @@ import multerS3 from 'multer-s3';
 import { s3 } from './awsConfig.js';
 import { AWS_BUCKET_NAME } from './serverConfig.js';
 
+console.log("S3 Bucket Name: ", AWS_BUCKET_NAME);
+
 export const s3uploader = multer({
     storage: multerS3({
         s3: s3,
